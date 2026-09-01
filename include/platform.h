@@ -32,6 +32,15 @@
 #define UART_REINIT 0
 #endif
 
+/* The MDS2450 bootloader console is connected to UART1. */
+#ifndef UART_CHANNEL
+#define UART_CHANNEL 1u
+#endif
+
+#if UART_CHANNEL > 3
+#error "UART_CHANNEL must be between 0 and 3"
+#endif
+
 #ifndef PCLK_HZ
 #define PCLK_HZ 66000000u
 #endif

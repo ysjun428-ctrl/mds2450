@@ -8,11 +8,13 @@ CASE ?= 2
 OPT  ?= O2
 PCLK_HZ ?= 66000000
 UART_REINIT ?= 0
+UART_CHANNEL ?= 1
 
 BUILD := build/case$(CASE)_$(OPT)
 OUT   := output/MDS2450_case$(CASE)_$(OPT)
 
-CPPFLAGS := -Iinclude -DMMU_CASE=$(CASE) -DPCLK_HZ=$(PCLK_HZ) -DUART_REINIT=$(UART_REINIT)
+CPPFLAGS := -Iinclude -DMMU_CASE=$(CASE) -DPCLK_HZ=$(PCLK_HZ) \
+            -DUART_REINIT=$(UART_REINIT) -DUART_CHANNEL=$(UART_CHANNEL)
 CPUFLAGS := -mcpu=arm926ej-s -march=armv5te -marm -msoft-float
 CFLAGS   := $(CPUFLAGS) -$(OPT) -g3 -std=c11 -ffreestanding -fno-builtin -fno-common -fno-pic \
             -fdata-sections -ffunction-sections -Wall -Wextra -Wshadow -Wconversion
@@ -76,7 +78,7 @@ opts:
 	$(MAKE) CASE=$(CASE) OPT=Os build
 
 info:
-	@echo "CASE=$(CASE) OPT=$(OPT) PCLK_HZ=$(PCLK_HZ) UART_REINIT=$(UART_REINIT)"
+	@echo "CASE=$(CASE) OPT=$(OPT) PCLK_HZ=$(PCLK_HZ) UART_REINIT=$(UART_REINIT) UART_CHANNEL=$(UART_CHANNEL)"
 	@echo "CC=$(CC)"
 	@$(CC) --version | head -1
 

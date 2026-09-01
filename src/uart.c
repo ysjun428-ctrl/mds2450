@@ -6,11 +6,11 @@ void uart_init(void)
 {
 #if UART_REINIT
     /* 8-N-1, polling mode, FIFO off. Exact baud depends on PCLK. */
-    UFCON0 = 0u;
-    UMCON0 = 0u;
-    ULCON0 = 0x3u;
-    UCON0  = 0x5u; /* Tx/Rx polling/interrupt request mode using PCLK on classic Samsung UARTs */
-    UBRDIV0 = (PCLK_HZ / (UART_BAUD * 16u)) - 1u;
+    UART_UFCON = 0u;
+    UART_UMCON = 0u;
+    UART_ULCON = 0x3u;
+    UART_UCON  = 0x5u; /* Tx/Rx polling/interrupt request mode using PCLK on classic Samsung UARTs */
+    UART_UBRDIV = (PCLK_HZ / (UART_BAUD * 16u)) - 1u;
 #else
     /* Keep bootloader UART settings. This is the safest classroom default. */
 #endif
@@ -19,11 +19,11 @@ void uart_init(void)
 void uart_putc(char c)
 {
     if (c == '\n') {
-        while ((UTRSTAT0 & (1u << 1)) == 0u) { }
-        UTXH0 = (uint8_t)'\r';
+        while ((UART_UTRSTAT & (1u << 1)) == 0u) { }
+        UART_UTXH = (uint8_t)'\r';
     }
-    while ((UTRSTAT0 & (1u << 1)) == 0u) { }
-    UTXH0 = (uint8_t)c;
+    while ((UART_UTRSTAT & (1u << 1)) == 0u) { }
+    UART_UTXH = (uint8_t)c;
 }
 
 void uart_puts(const char *s)

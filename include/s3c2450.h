@@ -6,19 +6,15 @@
 #define REG32(addr) (*(volatile uint32_t *)(uintptr_t)(addr))
 #define REG8(addr)  (*(volatile uint8_t  *)(uintptr_t)(addr))
 
-/* UART0: MDS2450 host console in the original lab material. */
-#define ULCON0      REG32(0x50000000u)
-#define UCON0       REG32(0x50000004u)
-#define UFCON0      REG32(0x50000008u)
-#define UMCON0      REG32(0x5000000Cu)
-#define UTRSTAT0    REG32(0x50000010u)
-#define UERSTAT0    REG32(0x50000014u)
-#define UFSTAT0     REG32(0x50000018u)
-#define UMSTAT0     REG32(0x5000001Cu)
-#define UTXH0       REG8 (0x50000020u)
-#define URXH0       REG8 (0x50000024u)
-#define UBRDIV0     REG32(0x50000028u)
-#define UDIVSLOT0   REG32(0x5000002Cu)
+/* UART channels are spaced 0x4000 bytes apart; MDS2450 uses UART1. */
+#define UART_BASE   (0x50000000u + (UART_CHANNEL * 0x4000u))
+#define UART_ULCON  REG32(UART_BASE + 0x00u)
+#define UART_UCON   REG32(UART_BASE + 0x04u)
+#define UART_UFCON  REG32(UART_BASE + 0x08u)
+#define UART_UMCON  REG32(UART_BASE + 0x0Cu)
+#define UART_UTRSTAT REG32(UART_BASE + 0x10u)
+#define UART_UTXH   REG8 (UART_BASE + 0x20u)
+#define UART_UBRDIV REG32(UART_BASE + 0x28u)
 
 /* PWM Timer block. TCFG1 canonical offset is +0x04. */
 #define TCFG0       REG32(0x51000000u)
