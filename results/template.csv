@@ -1,0 +1,8 @@
+case,benchmark,run,ticks
+1,integer,1,
+1,integer,2,
+1,integer,3,
+1,integer,4,
+1,integer,5,
+2,integer,1,
+3,integer,1,
