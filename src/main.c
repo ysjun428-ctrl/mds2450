@@ -34,7 +34,7 @@ typedef uint32_t (*bench_fn)(void);
 
 static void run_one(const char *name, bench_fn fn)
 {
-    uint32_t ticks[5] = {0};
+    uint32_t ticks[5];
     uart_puts("\n[BENCH] "); uart_puts(name); uart_nl();
 
     for (unsigned r = 0; r < BENCH_RUNS; ++r) {
